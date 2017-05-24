@@ -1,6 +1,7 @@
 
 const expect = require('expect')
 const BoundedSet = require('./set')
+const {ArraySet, DictSet} = require('./alt')
 
 
 describe('BoundedSet', () => {
@@ -59,3 +60,55 @@ describe('BoundedSet', () => {
 
 })
 
+describe('ArraySet', () => {
+  checkSet(v => new ArraySet(v))
+})
+
+describe('DictSet', () => {
+  checkSet(v => new DictSet(v))
+})
+
+
+function checkSet(factory) {
+  
+  function checkHas(fakeSet, set) {
+    let setValues = Array.from(set.values())
+    setValues.sort((a, b) => a - b)
+    expect(fakeSet.values()).toEqual(setValues)
+
+    expect(fakeSet.size).toBe(set.size)
+
+    for (let x of set) {
+      expect(fakeSet.has(x)).toBe(true)
+    }
+  }
+
+  it('starts empty', () => {
+    checkHas(factory(), new Set())
+  })
+
+  it('can add values', () => {
+    let b = factory(), s = new Set()
+    checkHas(b, s)
+    for (let x of [4, 1, 0, 16, 15, 17, 32, 33]) {
+      b.add(x); s.add(x)
+      checkHas(b, s)
+    }
+  })
+
+  it('can remove values', () => {
+    let initial = [0, 1, 2, 5, 8, 12, 15, 16, 17, 32]
+    let b = factory(initial), s = new Set(initial)
+    checkHas(b, s)
+    for (let x of [4, 1, 0, 16, 15, 17, 32, 33]) {
+      b.delete(x); s.delete(x)
+      checkHas(b, s)
+    }
+  })
+
+  it('supports values()', () => {
+    let numbers = [1, 5, 8, 15]
+    expect(factory(numbers).values()).toEqual(numbers)
+  })
+
+}

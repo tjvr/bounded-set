@@ -32,3 +32,5 @@ This is implemented using a bitmask of 16-bit unsigned integer words. A `1` bit 
 - Iteration is **2x slower** than a native set (but slightly faster than an Object-based set).
 - The size of the set is stored, so it is cheap to retrieve.
 
+In general, use `BoundedSet` if you want fast insertion/lookups/deletion; use a native Set (or even a wrapper around a sorted Array) if you want fast iteration.
+
