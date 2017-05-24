@@ -1,6 +1,7 @@
 
 class BoundedSet {
   constructor(bound, values) {
+    this.count = 0
     this.bound = bound = bound|0
     var words = 1
     while (((words * 16)|0) < bound) {
@@ -35,6 +36,7 @@ class BoundedSet {
     let offset = (value % 16)|0
     let word = (value >> 4)|0
     let mask = (1 << offset)|0
+    if (!(this.words[word] & mask)) this.count++
     this.words[word] |= mask
   }
 
@@ -43,6 +45,7 @@ class BoundedSet {
     let offset = (value % 16)|0
     let word = (value >> 4)|0
     let mask = (1 << offset)|0
+    if (this.words[word] & mask) this.count--
     this.words[word] &= ~mask
   }
 
@@ -67,6 +70,10 @@ class BoundedSet {
       result.push(value|0)
     })
     return result
+  }
+
+  get size() {
+    return this.count
   }
 }
 
