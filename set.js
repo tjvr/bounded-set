@@ -1,12 +1,17 @@
 
 class BoundedSet {
-  constructor(bound) {
+  constructor(bound, values) {
     this.bound = bound = bound|0
     var words = 1
-    while ((words * 16)|0 < bound) {
+    while (((words * 16)|0) < bound) {
       words++
     }
-    this.array = new Uint16Array(new ArrayBuffer((2 * words)|0))
+    this.words = new Uint16Array(new ArrayBuffer((2 * words)|0))
+
+    if (!values) return
+    for (var i=values.length; i--; ) {
+      this.add(values[i])
+    }
   }
 
   has(value) {
@@ -15,9 +20,9 @@ class BoundedSet {
       throw new Error('out of bounds: ' + value)
     }
     let offset = (value % 16)|0
-    let word = (offset >> 4)|0
+    let word = (value >> 4)|0
     let mask = (1 << offset)|0
-    return this.words[word] & mask
+    return !!(this.words[word] & mask)
   }
 
   add(value) {
@@ -26,9 +31,31 @@ class BoundedSet {
       throw new Error('out of bounds: ' + value)
     }
     let offset = (value % 16)|0
-    let word = (offset >> 4)|0
+    let word = (value >> 4)|0
     let mask = (1 << offset)|0
-    this.words[word] &= mask
+    this.words[word] |= mask
+  }
+
+  forEach(cb) {
+    let words = this.words
+    let length = words.length
+    for (var i=0; i<length; i++) {
+      let word = words[i]|0
+      for (var offset=0; offset<16; offset++) {
+        let mask = (1 << offset)|0
+        if (word & mask) {
+          cb((16 * i + offset)|0)
+        }
+      }
+    }
+  }
+
+  values() {
+    let result = []
+    this.forEach(value => {
+      result.push(value)
+    })
+    return result
   }
 }
 
