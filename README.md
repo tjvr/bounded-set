@@ -3,6 +3,13 @@ Bounded Set
 
 This is an implementation of a Set for storing integers bounded by a maximum.
 
+Say you have keep track of some numbers in a Set, so you can efficiently (in constant time) answer questions like "have I seen this number?". You could use an array (not efficient); an Object (should be constant time, but isn't fast); or a native Set (best).
+
+If you know the maximum possible number up front, you can use **bounded-set**. `BoundedSet` works like JavaScript's native `Set`, except it's a few times faster. Use it if you need a high-performance data structure for this.
+
+Usage
+-----
+
 The API is similar to the native `Set`, except it takes the bound as the first argument:
 
 ```js
