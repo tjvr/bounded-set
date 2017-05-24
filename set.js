@@ -54,13 +54,23 @@ class BoundedSet {
     let length = words.length
     for (var i=0; i<length; i++) {
       let word = words[i]|0
-      for (var offset=0; offset<16; offset++) {
-        let mask = (1 << offset)|0
-        if (word & mask) {
-          let value = (16 * i + offset)|0
-          cb(value)
-        }
-      }
+      let value = i * 16;
+      if (word &    0x1) cb(value)
+      if (word &    0x2) cb(value + 1)
+      if (word &    0x4) cb(value + 2)
+      if (word &    0x8) cb(value + 3)
+      if (word &   0x10) cb(value + 4)
+      if (word &   0x20) cb(value + 5)
+      if (word &   0x40) cb(value + 6)
+      if (word &   0x80) cb(value + 7)
+      if (word &  0x100) cb(value + 8)
+      if (word &  0x200) cb(value + 9)
+      if (word &  0x400) cb(value + 10)
+      if (word &  0x800) cb(value + 11)
+      if (word & 0x1000) cb(value + 12)
+      if (word & 0x2000) cb(value + 13)
+      if (word & 0x4000) cb(value + 14)
+      if (word & 0x8000) cb(value + 15)
     }
   }
 

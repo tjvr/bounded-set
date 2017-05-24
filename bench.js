@@ -46,6 +46,9 @@ suite('insert & delete', () => {
   }))
 })
 
+/*
+// This is a bad benchmark. It's trivial for the Array-based variant, since the
+// set is empty!
 suite('re-delete', () => {
   benchmarks(1000, (factory, bench) => bench(() => {
     const s = factory()
@@ -54,6 +57,7 @@ suite('re-delete', () => {
     }
   }))
 })
+*/
 
 suite('lookups', () => {
   benchmarks(1000, (factory, bench) => {

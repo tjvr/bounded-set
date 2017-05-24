@@ -27,10 +27,10 @@ The whole point of this is to try and get better performance than using a native
 
 This is implemented using a bitmask of 16-bit unsigned integer words. A `1` bit indicates the number is in the set.
 
-- Insertion is **~2x faster** than a native set or an Object-based set.
+- Insertion is **~2x faster** than a native Set or an Object-based set.
 - Deletion of non-existent values is **the same** as a native `set` (2x faster than an Object-based set).
-- Iteration is **2x slower** than a native set (but slightly faster than an Object-based set).
+- Iteration is **2x faster** than a native Set --about as fast as iterating an Array.
 - The size of the set is stored, so it is cheap to retrieve.
 
-In general, use `BoundedSet` if you want fast insertion/lookups/deletion; use a native Set (or even a wrapper around a sorted Array) if you want fast iteration.
+In general, use `BoundedSet` if you need fast insert/lookup/delete/iteration for a set of integers bounded by a maximum.
 
