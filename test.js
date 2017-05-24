@@ -44,5 +44,12 @@ describe('BoundedSet', () => {
     expect(new BoundedSet(16, numbers).values()).toEqual(numbers)
   })
 
+  it('throws out-of-bounds errors', () => {
+    expect(() => new BoundedSet(12).has(-1)).toThrow('out of bounds: -1')
+    expect(() => new BoundedSet(0).has(1)).toThrow('out of bounds: 1')
+    expect(() => new BoundedSet(100).has(101)).toThrow('out of bounds: 101')
+    expect(() => new BoundedSet(100).has(65536)).toThrow('out of bounds: 65536')
+  })
+
 })
 
