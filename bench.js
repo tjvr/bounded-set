@@ -27,21 +27,24 @@ function benchmarks(bound, create) {
 }
 
 
-suite('insertion', () => {
-  benchmarks(1000, (factory, bench) => bench(() => {
+const bound = 1 << 14
+const size = 1000
+
+suite('insert', () => {
+  benchmarks(bound, (factory, bench) => bench(() => {
     const s = factory()
-    for (var i=50; i--; ) {
-      s.add((Math.random() * 1000)|0)
+    for (var i=size; i--; ) {
+      s.add((Math.random() * bound)|0)
     }
   }))
 })
 
 suite('insert & delete', () => {
-  benchmarks(1000, (factory, bench) => bench(() => {
+  benchmarks(bound, (factory, bench) => bench(() => {
     let s = factory()
-    for (var i=50; i--; ) {
-      s.add((Math.random() * 1000)|0)
-      s.delete((Math.random() * 1000)|0)
+    for (var i=size; i--; ) {
+      s.add((Math.random() * bound)|0)
+      s.delete((Math.random() * bound)|0)
     }
   }))
 })
@@ -50,36 +53,36 @@ suite('insert & delete', () => {
 // This is a bad benchmark. It's trivial for the Array-based variant, since the
 // set is empty!
 suite('re-delete', () => {
-  benchmarks(1000, (factory, bench) => bench(() => {
+  benchmarks(bound, (factory, bench) => bench(() => {
     const s = factory()
-    for (var i=50; i--; ) {
-      s.delete((Math.random() * 1000)|0)
+    for (var i=size; i--; ) {
+      s.delete((Math.random() * bound)|0)
     }
   }))
 })
 */
 
-suite('lookups', () => {
-  benchmarks(1000, (factory, bench) => {
+suite('lookup', () => {
+  benchmarks(bound, (factory, bench) => {
     let s = factory()
-    for (var i=50; i--; ) {
-      s.add((Math.random() * 1000)|0)
+    for (var i=size; i--; ) {
+      s.add((Math.random() * bound)|0)
     }
 
     bench(() => {
       var count = 0
-      for (var i=50; i--; ) {
-        s.has((Math.random() * 1000)|0)
+      for (var i=size; i--; ) {
+        s.has((Math.random() * bound)|0)
       }
     })
   })
 })
 
 suite('iteration', () => {
-  benchmarks(1000, (factory, bench) => {
+  benchmarks(bound, (factory, bench) => {
     let s = factory()
-    for (var i=50; i--; ) {
-      s.add((Math.random() * 1000)|0)
+    for (var i=size; i--; ) {
+      s.add((Math.random() * bound)|0)
     }
 
     bench(() => {
@@ -90,11 +93,13 @@ suite('iteration', () => {
   })
 })
 
+/*
+This is only slow for DictSet.
 suite('count', () => {
-  benchmarks(1000, (factory, bench) => {
+  benchmarks(bound, (factory, bench) => {
     let s = factory()
-    for (var i=50; i--; ) {
-      s.add((Math.random() * 1000)|0)
+    for (var i=size; i--; ) {
+      s.add((Math.random() * bound)|0)
     }
 
     bench(() => {
@@ -102,4 +107,5 @@ suite('count', () => {
     })
   })
 })
+*/
 

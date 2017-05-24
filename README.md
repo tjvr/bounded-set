@@ -1,7 +1,7 @@
 Bounded Set
 ===========
 
-This is an implementation of a Set for storing integers bounded by a maximum value.
+This is an implementation of a Set for storing integers bounded by a maximum.
 
 The API is similar to the native `Set`, except it takes the bound as the first argument:
 
@@ -23,14 +23,35 @@ b.has(-1)   // Error: out of bounds: -1
 Performance
 -----------
 
-The whole point of this is to try and get better performance than using a native `Set` (or an `Object`-based set, for platforms, by exploiting the fact that the integers are bounded.
+`BoundedSet` is about **twice as fast** as a native Set.
 
-This is implemented using a bitmask of 16-bit unsigned integer words. A `1` bit indicates the number is in the set.
+- Inserts and deletes are about ~3x faster than a native Set. Deletes are about ~2x faster than an Object-based set.
+- Lookups are about ~4x faster than a native Set.
+- Iteration is ~3-5x faster than a native Set (depending on bound); about twice as fast as array iteration using `forEach` (!); and 20x faster than using `Object.keys()`... :-)
 
-- Insertion is **~2x faster** than a native Set or an Object-based set.
-- Deletion of non-existent values is **the same** as a native `set` (2x faster than an Object-based set).
-- Iteration is **2x faster** than a native Set --about as fast as iterating an Array.
-- The size of the set is stored, so it is cheap to retrieve.
 
-In general, use `BoundedSet` if you need fast insert/lookup/delete/iteration for a set of integers bounded by a maximum.
+Full API
+--------
+
+The following subset of the `Set` API is supported:
+
+* `add(item)`
+* `delete(item)`
+* `has(item)` -> Boolean
+* `values()` -> Array of values, instead of the native `SetIterator`
+* `size` -> Number
+
+Not supported:
+
+* Iterators (feel free to send a PR!)
+
+
+Downsides
+---------
+
+The implementation uses a bitmask of 16-bit unsigned integer words. A `1` bit indicates the number is in the set.
+
+This leads to an obvious downside: **memory use**. Since we allocate one bit for each number up to the bound; allocating a BoundedSet with a bound of 2^30 (the largest sensible bound in JavaScript; remember JS only has Doubles)--will allocate a buffer 134MB in size.
+
+It's also not actually faster for sufficiently large bounds. You should be safe up to at least 2^16 (65536). Somewhere above 2^14, iteration starts to get slow. But this probably depends on your hardware!
 
