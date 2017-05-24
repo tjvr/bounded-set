@@ -1,7 +1,7 @@
 
 const expect = require('expect')
 const BoundedSet = require('./set')
-const {ArraySet, DictSet} = require('./alt')
+const {ArraySet, DictSet} = require('./test/alt')
 
 
 function benchmarks(bound, create) {

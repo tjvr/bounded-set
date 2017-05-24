@@ -1,6 +1,6 @@
 
 const expect = require('expect')
-const BoundedSet = require('./set')
+const BoundedSet = require('../set')
 const {ArraySet, DictSet} = require('./alt')
 
 
