@@ -5,9 +5,11 @@
   "author": "Tim Radvan <tim@tjvr.org>",
   "license": "BSD-3-Clause",
   "scripts": {
-      "test": "mocha"
+    "test": "mocha",
+    "bench": "benchr bench.js"
   },
   "dependencies": {
+    "benchr": "^3.4.0",
     "expect": "^1.20.2",
     "mocha": "^3.4.1"
   }

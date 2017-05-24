@@ -73,7 +73,7 @@ class BoundedSet {
   }
 
   get size() {
-    return this.count
+    return this.count|0
   }
 }
 

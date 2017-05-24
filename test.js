@@ -6,6 +6,8 @@ const BoundedSet = require('./set')
 describe('BoundedSet', () => {
 
   function checkHas(boundedSet, set) {
+    expect(boundedSet.size).toBe(set.size)
+
     let setValues = Array.from(set.values())
     setValues.sort((a, b) => a - b)
     expect(boundedSet.values()).toEqual(setValues)
