@@ -6,7 +6,11 @@ const BoundedSet = require('./set')
 describe('BoundedSet', () => {
 
   function checkHas(boundedSet, set) {
-    for (var i=0; i<=set.bound; i++) {
+    let setValues = Array.from(set.values())
+    setValues.sort((a, b) => a - b)
+    expect(boundedSet.values()).toEqual(setValues)
+
+    for (var i=0; i<=boundedSet.bound; i++) {
       expect(boundedSet.has(i)).toBe(set.has(i))
     }
   }
