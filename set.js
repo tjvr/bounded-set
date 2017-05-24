@@ -14,11 +14,16 @@ class BoundedSet {
     }
   }
 
-  has(value) {
+  _validIndex(value) {
     value = value|0
     if (value < 0 || value > this.bound) {
       throw new Error('out of bounds: ' + value)
     }
+    return value
+  }
+
+  has(value) {
+    value = this._validIndex(value)|0
     let offset = (value % 16)|0
     let word = (value >> 4)|0
     let mask = (1 << offset)|0
@@ -26,14 +31,19 @@ class BoundedSet {
   }
 
   add(value) {
-    value = value|0
-    if (value < 0 || value > this.bound) {
-      throw new Error('out of bounds: ' + value)
-    }
+    value = this._validIndex(value)|0
     let offset = (value % 16)|0
     let word = (value >> 4)|0
     let mask = (1 << offset)|0
     this.words[word] |= mask
+  }
+
+  delete(value) {
+    value = this._validIndex(value)|0
+    let offset = (value % 16)|0
+    let word = (value >> 4)|0
+    let mask = (1 << offset)|0
+    this.words[word] &= ~mask
   }
 
   forEach(cb) {
@@ -44,7 +54,8 @@ class BoundedSet {
       for (var offset=0; offset<16; offset++) {
         let mask = (1 << offset)|0
         if (word & mask) {
-          cb((16 * i + offset)|0)
+          let value = (16 * i + offset)|0
+          cb(value)
         }
       }
     }
@@ -53,9 +64,11 @@ class BoundedSet {
   values() {
     let result = []
     this.forEach(value => {
-      result.push(value)
+      result.push(value|0)
     })
     return result
   }
 }
+
+module.exports = BoundedSet
 

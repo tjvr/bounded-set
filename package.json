@@ -3,5 +3,12 @@
   "version": "0.1.0",
   "main": "set.js",
   "author": "Tim Radvan <tim@tjvr.org>",
-  "license": "BSD-3-Clause"
+  "license": "BSD-3-Clause",
+  "scripts": {
+      "test": "mocha"
+  },
+  "dependencies": {
+    "expect": "^1.20.2",
+    "mocha": "^3.4.1"
+  }
 }
