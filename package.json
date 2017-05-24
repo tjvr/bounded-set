@@ -4,6 +4,9 @@
   "main": "set.js",
   "author": "Tim Radvan <tim@tjvr.org>",
   "license": "BSD-3-Clause",
+  "files": [
+    "set.js"
+  ],
   "scripts": {
     "test": "mocha",
     "bench": "benchr benchmark.js"
