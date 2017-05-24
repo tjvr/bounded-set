@@ -1,6 +1,12 @@
+(function(root, factory) {
+    if (typeof module === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        root.nearley = factory();
+    }
+}(this, function() {
 
-class BoundedSet {
-  constructor(bound, values) {
+  var BoundedSet = function(bound, values) {
     this.count = 0
     this.bound = bound = bound|0
     var words = 1
@@ -15,7 +21,7 @@ class BoundedSet {
     }
   }
 
-  _validIndex(value) {
+  BoundedSet.prototype._validIndex = function(value) {
     value = value|0
     if (value < 0 || value > this.bound) {
       throw new Error('out of bounds: ' + value)
@@ -23,38 +29,38 @@ class BoundedSet {
     return value
   }
 
-  has(value) {
+  BoundedSet.prototype.has = function(value) {
     value = this._validIndex(value)|0
-    let offset = (value % 16)|0
-    let word = (value >> 4)|0
-    let mask = (1 << offset)|0
+    var offset = (value % 16)|0
+    var word = (value >> 4)|0
+    var mask = (1 << offset)|0
     return !!(this.words[word] & mask)
   }
 
-  add(value) {
+  BoundedSet.prototype.add = function(value) {
     value = this._validIndex(value)|0
-    let offset = (value % 16)|0
-    let word = (value >> 4)|0
-    let mask = (1 << offset)|0
+    var offset = (value % 16)|0
+    var word = (value >> 4)|0
+    var mask = (1 << offset)|0
     if (!(this.words[word] & mask)) this.count++
     this.words[word] |= mask
   }
 
-  delete(value) {
+  BoundedSet.prototype.delete = function(value) {
     value = this._validIndex(value)|0
-    let offset = (value % 16)|0
-    let word = (value >> 4)|0
-    let mask = (1 << offset)|0
+    var offset = (value % 16)|0
+    var word = (value >> 4)|0
+    var mask = (1 << offset)|0
     if (this.words[word] & mask) this.count--
     this.words[word] &= ~mask
   }
 
-  forEach(cb) {
-    let words = this.words
-    let length = words.length
+  BoundedSet.prototype.forEach = function(cb) {
+    var words = this.words
+    var length = words.length
     for (var i=0; i<length; i++) {
-      let word = words[i]|0
-      let value = i * 16;
+      var word = words[i]|0
+      var value = i * 16;
       if (word &    0x1) cb(value)
       if (word &    0x2) cb(value + 1)
       if (word &    0x4) cb(value + 2)
@@ -74,18 +80,18 @@ class BoundedSet {
     }
   }
 
-  values() {
-    let result = []
-    this.forEach(value => {
+  BoundedSet.prototype.values = function() {
+    var result = []
+    this.forEach(function(value) {
       result.push(value|0)
     })
     return result
   }
 
-  get size() {
-    return this.count|0
-  }
-}
+  Object.defineProperty(BoundedSet.prototype, 'size', {
+    get: function() { return this.count|0 },
+  })
 
-module.exports = BoundedSet
+  return BoundedSet
+}))
 
