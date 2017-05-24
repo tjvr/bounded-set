@@ -1,6 +1,6 @@
 {
   "name": "bounded-set",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "bounded-set.js",
   "author": "Tim Radvan <tim@tjvr.org>",
   "license": "BSD-3-Clause",
