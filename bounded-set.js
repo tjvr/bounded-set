@@ -1,8 +1,8 @@
 (function(root, factory) {
     if (typeof module === 'object' && module.exports) {
-        module.exports = factory();
+        module.exports = factory()
     } else {
-        root.nearley = factory();
+        root.BoundedSet = factory()
     }
 }(this, function() {
 
@@ -60,7 +60,7 @@
     var length = words.length
     for (var i=0; i<length; i++) {
       var word = words[i]|0
-      var value = i * 16;
+      var value = i * 16
       if (word &    0x1) cb(value)
       if (word &    0x2) cb(value + 1)
       if (word &    0x4) cb(value + 2)
