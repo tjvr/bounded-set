@@ -1,6 +1,6 @@
 {
   "name": "bounded-set",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "bounded-set.js",
   "repository": "https://github.com/tjvr/bounded-set.git",
   "author": "Tim Radvan <tim@tjvr.org>",
