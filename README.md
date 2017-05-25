@@ -49,6 +49,8 @@ Performance
 Full API
 --------
 
+Supports IE10+. (JS `Set` supports IE11+.)
+
 The following subset of the `Set` API is supported:
 
 * `add(item)`
