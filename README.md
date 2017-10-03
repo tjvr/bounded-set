@@ -41,9 +41,11 @@ Performance
 
 `BoundedSet` is more than **twice as fast** as a native Set.
 
-- Inserts and deletes are about ~3x faster than a native Set. Deletes are about ~2x faster than an Object-based set.
-- Lookups are about ~4x faster than a native Set.
-- Iteration is ~3-5x faster than a native Set (depending on bound); about twice as fast as array iteration using `forEach` (!); and 20x faster than using `Object.keys()`... :-)
+- Inserts and deletes are about ~3x faster than a native Set.
+- Lookups are about ~2-3 faster than a native Set.
+- Iteration is 25% faster than a native Set (depending on bound); _half_ the speed of <s>about twice as fast as</s> array iteration using `forEach`; and 20x faster than using `Object.keys()`... :-)
+
+It used to be a bit faster still, but `Set`s have caught up... the V8 team do good stuff :-)
 
 
 Full API
