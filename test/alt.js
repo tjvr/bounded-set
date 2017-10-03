@@ -21,7 +21,11 @@ class DictSet {
   }
 
   forEach(cb) {
-    this.values().forEach(cb)
+    for (var key in this.dict) {
+      if (Object.hasOwnProperty.call(this.dict, key)) {
+        cb(key|0);
+      }
+    }
   }
 
   values() {
