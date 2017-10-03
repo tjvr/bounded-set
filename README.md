@@ -67,7 +67,7 @@ Not supported:
 Downsides
 ---------
 
-The implementation uses a bitmask of 16-bit unsigned integer words. A `1` bit indicates the number is in the set.
+The implementation uses a bitmask of 32-bit unsigned integer words. A `1` bit indicates the number is in the set.
 
 This leads to an obvious downside: **memory use**. Since we allocate one bit for each number up to the bound; allocating a BoundedSet with a bound of 2^30 (the largest sensible bound in JavaScript; remember JS only has Doubles)--will allocate a buffer 134MB in size.
 
